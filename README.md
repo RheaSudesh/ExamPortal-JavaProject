@@ -6,7 +6,6 @@ For now I have developed the console Login part:
 Sample console Output:
 
 _____________________________________
-
 ONLINE EXAMINATION PORTAL
 Menu
 1. Login as Admin
@@ -109,6 +108,3 @@ Menu
  Please choice your choice = 5
 
 Exiting from Exam Portal ...
-
-
-
