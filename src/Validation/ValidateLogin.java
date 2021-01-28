@@ -6,7 +6,12 @@ public class ValidateLogin {
 		
 		if(name.equals("Admin")&& pass.equals("admin123")) {
 			return true;
-		}return false;
+		}
+		else
+		{
+			System.out.println("Invalid login credentials");
+			return false;
+		}
 		
 	}
 	

@@ -1,11 +1,10 @@
 package Testing;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
-import Model.User;
+import Model.*;
+import Validation.*;
 
 
 public class UserTest {
@@ -16,8 +15,8 @@ public class UserTest {
 		public void testSetterGetter() {
 			user.setEmail("rheasudesh@gmail.com");
 			user.setPassword("Cse@2017");
-			/*assertEquals("rheasudesh@gmail.com",user.getEmail());
-			assertEquals("Cse@2017",user.getPassword());*/
+			assertEquals("rheasudesh@gmail.com",user.getEmail());
+			assertEquals("Cse@2017",user.getPassword());
 			assertEquals(181,user.getRollNo());
 			try {
 				user.setRollNo(0);

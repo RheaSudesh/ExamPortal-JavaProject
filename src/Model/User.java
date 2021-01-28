@@ -6,7 +6,14 @@ public class User {
 	String email;
 	String password;
 	int rollNo;
+	int goldPoints=0;
 	
+	public int getGoldPoints() {
+		return goldPoints;
+	}
+	public void setGoldPoints(int goldPoints) {
+		this.goldPoints = goldPoints;
+	}
 	public String getName() {
 		return name;
 	}
