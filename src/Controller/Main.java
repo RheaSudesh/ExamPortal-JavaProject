@@ -5,25 +5,106 @@ import Validation.*;
 
 public class Main {
 	
-	public static Map<String,HashMap> namelist1 = new HashMap<String,HashMap>();
+	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>();
 	public static ArrayList<User> StudentList=new ArrayList<User>();
 	public static HashMap<Questions, String> questions;
+	public static int noofcourses=0;
 	static Scanner sc=new Scanner(System.in);
+	
 	public static void adminFunctionality()
 	{	
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number of courses = ");		
-		int noofcourses=sc.nextInt();
-				
-		for(int courseNo=0;courseNo<noofcourses;courseNo++) 
+		int choice=1;
+		while(choice!=8)
 		{
+			System.out.println("_____________________________________\n");
+			System.out.println("ADMIN FUCNTIONALITIES ");
+			System.out.println("Menu");
+			System.out.println("1. Add a Course");
+			System.out.println("2. Delete Course");
+			System.out.println("3. Modify Course");
+			System.out.println("4. Print Courses");
+			System.out.println("5. Add Question in a Course");
+			System.out.println("6. Delete Question in a Course");
+			System.out.println("7. Modify Question in a Course");
+			System.out.println("8. Exit as Admin");
+			System.out.println("_____________________________________\n");
+			System.out.println(" Enter a Choice = ");
+			choice=sc.nextInt();
 			sc.nextLine();
-			System.out.println("Enter course name=");
-			String courseName = sc.nextLine();		
-			QuestionBank AnswerKey=new QuestionBank();
-			questions=(HashMap)AnswerKey.setQuestions();
-			namelist1.put(courseName, questions);
+			
+			switch(choice)
+			{
+				case 1:
+					System.out.println("Enter the number of courses = ");		
+					noofcourses=sc.nextInt();							
+					for(int courseNo=0;courseNo<noofcourses;courseNo++) 
+					{
+						System.out.println("Enter course name=");
+						String courseName = sc.nextLine();
+						System.out.println("--------SetQuestions --------");
+						//sc.nextLine();
+						QuestionBank AnswerKey=new QuestionBank();
+						questions=(HashMap)AnswerKey.setQuestions();
+						courseList.put(courseName, questions);
+					}
+					break;
+				
+				case 4:
+					System.out.println("Print the Courses");
+					for(String courseName:courseList.keySet())
+					{
+						System.out.println("->"+courseName);
+					}
+					break;
+				
+				case 5:
+					System.out.println("Print the Courses");
+					for(String courseName:courseList.keySet())
+					{
+						System.out.println("->"+courseName);
+					}
+					System.out.println("Enter which course = ");
+					String courseNameToAdded=sc.nextLine();
+					QuestionBank AnswerKey2=new QuestionBank();
+					questions=(HashMap)AnswerKey2.addQuestion();
+					courseList.put(courseNameToAdded, questions);
+				
+				case 6:
+					System.out.println("Print the Courses");
+					for(String courseName:courseList.keySet())
+					{
+						System.out.println("->"+courseName);
+					}
+					System.out.println("Enter which course = ");
+					String courseNameToDelete=sc.nextLine();
+					System.out.print("Enter question to be deleted = ");
+					String ques = sc.nextLine();
+					QuestionBank AnswerKey3=new QuestionBank();
+					questions=(HashMap)AnswerKey3.deleteQuestions(questions,ques);
+					courseList.put(courseNameToDelete, questions);
+					break;
+				
+				case 7:
+					System.out.println("Print the Courses");
+					for(String courseName:courseList.keySet())
+					{
+						System.out.println("->"+courseName);
+					}
+					System.out.println("Enter which course = ");
+					String courseNameToModified=sc.nextLine();
+					QuestionBank AnswerKey4=new QuestionBank();
+					questions=(HashMap)AnswerKey4.modifyQuestion(questions);
+					courseList.put(courseNameToModified, questions);
+				
+					
+					
+				case 8: System.out.println("Exiting as Admin...");break;
+				default: System.out.println("Invalid choice");break;
+					
+			
+			}
 		}
+	
 							
 	}
 	
@@ -34,7 +115,7 @@ public class Main {
 			
 			System.out.println("_________________________________");
 			System.out.println("These are the  courses");
-			for(String CourseName :namelist1.keySet() ) 
+			for(String CourseName :courseList.keySet() ) 
 			{
 				System.out.println("->" +CourseName);
 			}
@@ -42,15 +123,17 @@ public class Main {
 			System.out.print("Enter name of the chossen course = ");
 			String finalchoice= sc.nextLine() ;
 			
-			if(namelist1.containsKey(finalchoice))
+			if(courseList.containsKey(finalchoice))
 			{
 				QuestionBank objques = new QuestionBank();
 				int QuestionNumber=0;
 				objques.display(questions);	
 				
-				System.out.println("_________________________________");
+				System.out.println("__________________________________________");
 				System.out.println("Answer Paper");
+				System.out.println("__________________________________________");
 				System.out.println("Instructions \n1. Write the correct option in the prompt\n2. Do make sure you rewrite the option correctly ");
+				System.out.println("__________________________________________");
 				
 				for(Questions item : questions.keySet()) 
 				{
@@ -77,7 +160,7 @@ public class Main {
 	{
 		
 		int choice=1;
-		while(choice!=0)
+		while(choice!=5)
 		{
 		System.out.println("_____________________________________\n");
 		System.out.println("ONLINE EXAMINATION PORTAL");
@@ -98,6 +181,7 @@ public class Main {
 		switch(choice)
 		{	
 			case 1: 
+				//admin entry
 				System.out.print("Enter Admin id = ");
 				email=sc.nextLine();
 				System.out.print("Enter a Admin password = ");
@@ -108,12 +192,14 @@ public class Main {
 				{
 					System.out.println("Successfully Logined as Admin");
 					System.out.println("_____________________________________\n");
+					System.out.println("Welcome Admin\n");
 					adminFunctionality();
 				}
 				else System.out.println("Please Try again\n");
 				break;
 
 			case 2:
+				//login for user
 				System.out.println("Enter Student Email id = ");
 				email=sc.nextLine();
 				System.out.println("Enter Student password = ");
@@ -136,6 +222,7 @@ public class Main {
 			
 			
 			case 3: 
+				//register for new candidates
 				System.out.println("Enter your Name = ");
 				name=sc.nextLine();
 				System.out.println("Enter your Email ID = ");
@@ -159,6 +246,7 @@ public class Main {
 				break;
 			
 			case 4: 
+				//printing results
 				System.out.println(String.format("%20s : %20s : %20s","Student Roll Number","Student Name","Gold Points"));
 				System.out.println("________________________________________________");
 				for (User item:StudentList)

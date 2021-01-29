@@ -23,13 +23,51 @@ public class QuestionBank
 	
 	public Map<Questions, String> setQuestions() {
 		Map<Questions,String> mapques = new HashMap<Questions,String>();
-		System.out.println("enter no of ques");
-	Scanner sc = new Scanner(System.in);
-	noOfQues= sc.nextInt();sc.nextLine();
+		System.out.println("Enter number of questions in this course");
+		noOfQues= sc.nextInt();sc.nextLine();
+		
+		while(noOfQues!=0)
+		{
+			noOfQues-=1;
+			System.out.println("Enter a Question = ");	
+			String question = sc.nextLine();
+			System.out.println("Enter option 1 =");
+			String op1=sc.nextLine();
+			System.out.println("Enter option 2 =");
+			String op2=sc.nextLine();
+			System.out.println("Enter option 3 =");
+			String op3=sc.nextLine();
+			System.out.println("Enter option 4 =");
+			String op4=sc.nextLine();
+			System.out.println("Enter the correct answer =");
+			String correctOption=sc.nextLine();
+			
+			Questions obj = new Questions(question, op1, op2, op3, op4);
+		    mapques.put(obj, correctOption);
+		}
+		return mapques;
+	}
 	
-	while(noOfQues!=0)
-	{
-		noOfQues-=1;
+	
+	
+	public Map<Questions, String> deleteQuestions(Map<Questions, String> questions,String ques) {
+		
+		for(Questions item : questions.keySet()) {
+			if(item.getQuestion().equals(ques)) 
+			{
+				questions.remove(item);
+				System.out.println("Successfully deleted");
+			}
+			else
+				System.out.println("Question not found");
+		
+		}
+		return questions;
+	}
+
+	
+	public Map<Questions, String> addQuestion() {
+		
 		System.out.println("Enter a Question = ");	
 		String question = sc.nextLine();
 		System.out.println("Enter option 1 =");
@@ -42,58 +80,27 @@ public class QuestionBank
 		String op4=sc.nextLine();
 		System.out.println("Enter the correct answer =");
 		String correctOption=sc.nextLine();
-		//baby pick the call..i want to see u too
 		Questions obj = new Questions(question, op1, op2, op3, op4);
-	    mapques.put(obj, correctOption);
-		}
-		return mapques;
-	}
-	
-	
-	
-	public void deleteQuestions(Map<Questions, String> questions) {
-		System.out.print("Enter question to be deleted");
-		String ques = sc.nextLine();
-		for(Questions item : questions.keySet()) {
-			if(item.getQuestion().equals(ques)) {
-				questions.remove(item);
-				System.out.println("Successfully deleted");
-			}else
-				System.out.println("Question not found");
-		
-		}	
-	}
-
-	
-	public void addQeus() {
-		
-		System.out.println("here");
-		String ques = sc.nextLine();
-		String op1 = sc.nextLine();
-		String op2 = sc.nextLine();
-		String op3 = sc.nextLine();
-		String op4 = sc.nextLine();
-		String correctOption=sc.nextLine();
-		Questions obj = new Questions(ques, op1, op2, op3, op4);
 	    map.put(obj, correctOption);
+	    
+	    return map;
 		
 	}
 
 	
-	public void updateques(Map<Questions, String> questions) {
+	public Map<Questions, String> modifyQuestion(Map<Questions, String> questions) {
 		
-		String oldques = sc.nextLine();
+		String oldques = (String) sc.nextLine();
 		boolean flag = false;
 		for(Questions item : questions.keySet()) {
-			if(item.getQuestion().equals(oldques)) 
+			if(( item).getQuestion().equals(oldques)) 
 			{
 				flag=true;
 			}
 		
 		}
-		if(flag==false)
-			System.out.println("No such Questions exists");
-		else {
+		if(flag==true)
+		{
 			
 			System.out.println("Enter a Question = ");	
 			String newQues = sc.nextLine();
@@ -106,26 +113,27 @@ public class QuestionBank
 			System.out.println("Enter option 4 =");
 			String newop4=sc.nextLine();
 			System.out.println("Enter the correct answer =");
-			String correctOption=sc.nextLine();
+			String correctOption= sc.nextLine();
+			Questions obj;
 			for(Questions item : questions.keySet()) 
 			{
-				if(item.getQuestion().equals(oldques)) 
+				if((item).getQuestion().equals(oldques)) 
 				{
-					Questions obj = new Questions(newQues, newop1, newop2, newop3, newop4);
+					obj = new Questions(newQues, newop1, newop2, newop3, newop4);
 					map.put(obj, correctOption);			
 				}
 			}
 			System.out.println("Successfully added Question");	
 		}
+		else
+			System.out.println("No such Questions exists");
 			
-			
+		return map;	
 			
 		
 	}
 	
-	
-	
-	
+		
 	public void display(Map<Questions, String> questions) {
 	
 		for(Questions item : questions.keySet()) {
