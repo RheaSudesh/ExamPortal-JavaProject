@@ -5,7 +5,7 @@ import Validation.*;
 
 public class Main {
 	
-	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>();
+	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>(); //course , <Questions, string>
 	public static ArrayList<User> StudentList=new ArrayList<User>();
 	public static HashMap<Questions, String> questions;
 	public static int noofcourses=0;
@@ -40,7 +40,7 @@ public class Main {
 					for(int courseNo=0;courseNo<noofcourses;courseNo++) 
 					{
 						System.out.println("Enter course name=");
-						String courseName = sc.nextLine();
+						String courseName = sc.nextLine(); //error to be fixed
 						System.out.println("--------SetQuestions --------");
 						//sc.nextLine();
 						QuestionBank AnswerKey=new QuestionBank();
@@ -240,6 +240,8 @@ public class Main {
 				{
 					StudentList.add(user2);
 					System.out.println("Successfully Registered as "+user2.getName());
+					System.out.println("________________________________________________");
+					System.out.println("Take Examination");
 					studentFunctionality(user2);
 				}
 				else System.out.println("Error in Registration...try again!\n");
