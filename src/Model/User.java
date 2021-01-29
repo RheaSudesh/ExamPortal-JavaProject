@@ -12,7 +12,7 @@ public class User {
 		return goldPoints;
 	}
 	public void setGoldPoints(int goldPoints) {
-		this.goldPoints = goldPoints;
+		this.goldPoints += goldPoints;
 	}
 	public String getName() {
 		return name;

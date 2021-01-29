@@ -23,6 +23,7 @@ public class QuestionBank
 	
 	public Map<Questions, String> setQuestions() {
 		Map<Questions,String> mapques = new HashMap<Questions,String>();
+		mapques.clear();
 		System.out.println("Enter number of questions in this course");
 		noOfQues= sc.nextInt();sc.nextLine();
 		
@@ -52,21 +53,25 @@ public class QuestionBank
 	
 	public Map<Questions, String> deleteQuestions(Map<Questions, String> questions,String ques) {
 		
+		int questionNotFound = 0;
 		for(Questions item : questions.keySet()) {
 			if(item.getQuestion().equals(ques)) 
 			{
 				questions.remove(item);
 				System.out.println("Successfully deleted");
+				questionNotFound = 1;
+				break;
+				
 			}
-			else
-				System.out.println("Question not found");
-		
 		}
+		if(questionNotFound == 0)
+			System.out.println("Question not found");
+	
 		return questions;
 	}
 
 	
-	public Map<Questions, String> addQuestion() {
+	public Map<Questions, String> addQuestion(Map<Questions, String> questions) {
 		
 		System.out.println("Enter a Question = ");	
 		String question = sc.nextLine();
@@ -81,28 +86,31 @@ public class QuestionBank
 		System.out.println("Enter the correct answer =");
 		String correctOption=sc.nextLine();
 		Questions obj = new Questions(question, op1, op2, op3, op4);
-	    map.put(obj, correctOption);
+	    questions.put(obj, correctOption);
 	    
-	    return map;
+	    return questions;
 		
 	}
 
 	
 	public Map<Questions, String> modifyQuestion(Map<Questions, String> questions) {
 		
-		String oldques = (String) sc.nextLine();
+		System.out.println("Enter the question to be modified =");
+		String oldques = sc.nextLine();
 		boolean flag = false;
-		for(Questions item : questions.keySet()) {
-			if(( item).getQuestion().equals(oldques)) 
+		for(Questions item : questions.keySet()) 
+		{
+		if( item.getQuestion().equals(oldques)) 
 			{
 				flag=true;
+				questions.remove(item);
 			}
 		
 		}
 		if(flag==true)
 		{
 			
-			System.out.println("Enter a Question = ");	
+			System.out.println("Enter a new Question = ");	
 			String newQues = sc.nextLine();
 			System.out.println("Enter option 1 =");
 			String newop1=sc.nextLine();
@@ -115,20 +123,17 @@ public class QuestionBank
 			System.out.println("Enter the correct answer =");
 			String correctOption= sc.nextLine();
 			Questions obj;
-			for(Questions item : questions.keySet()) 
-			{
-				if((item).getQuestion().equals(oldques)) 
-				{
-					obj = new Questions(newQues, newop1, newop2, newop3, newop4);
-					map.put(obj, correctOption);			
-				}
-			}
+
+			obj = new Questions(newQues, newop1, newop2, newop3, newop4);
+			questions.put(obj, correctOption);	
 			System.out.println("Successfully added Question");	
+			
+			
 		}
 		else
 			System.out.println("No such Questions exists");
 			
-		return map;	
+		return questions;	
 			
 		
 	}

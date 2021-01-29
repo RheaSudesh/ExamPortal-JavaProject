@@ -15,12 +15,6 @@ public class ValidateLogin {
 		
 	}
 	
-	public boolean studentValidation(String name, String pass) {
-
-		if(ValidateRegister.usermap.containsKey(name) && pass.equals(ValidateRegister.usermap.get(name))) {
-			return true;
-		}return false;
-	}
 
 
 }

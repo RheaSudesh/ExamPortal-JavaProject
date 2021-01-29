@@ -5,9 +5,10 @@ import Validation.*;
 
 public class Main {
 	
+	
 	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>(); //course , <Questions, string>
 	public static ArrayList<User> StudentList=new ArrayList<User>();
-	public static HashMap<Questions, String> questions;
+	//public static HashMap<Questions, String> questions;
 	public static int noofcourses=0;
 	static Scanner sc=new Scanner(System.in);
 	
@@ -17,12 +18,12 @@ public class Main {
 		while(choice!=8)
 		{
 			System.out.println("_____________________________________\n");
-			System.out.println("ADMIN FUCNTIONALITIES ");
-			System.out.println("Menu");
+			System.out.println("ADMIN FUCNTIONALITIES \n");
+			System.out.println("Menu:");
 			System.out.println("1. Add a Course");
-			System.out.println("2. Delete Course");
-			System.out.println("3. Modify Course");
-			System.out.println("4. Print Courses");
+			System.out.println("2. Delete a Course");
+			System.out.println("3. Rename a Course");
+			System.out.println("4. Display Courses");
 			System.out.println("5. Add Question in a Course");
 			System.out.println("6. Delete Question in a Course");
 			System.out.println("7. Modify Question in a Course");
@@ -30,25 +31,56 @@ public class Main {
 			System.out.println("_____________________________________\n");
 			System.out.println(" Enter a Choice = ");
 			choice=sc.nextInt();
+			System.out.println("_____________________________________\n");
 			sc.nextLine();
 			
 			switch(choice)
 			{
 				case 1:
 					System.out.println("Enter the number of courses = ");		
-					noofcourses=sc.nextInt();							
+					noofcourses=sc.nextInt();
+					sc.nextLine();
 					for(int courseNo=0;courseNo<noofcourses;courseNo++) 
 					{
-						System.out.println("Enter course name=");
-						String courseName = sc.nextLine(); //error to be fixed
 						System.out.println("--------SetQuestions --------");
-						//sc.nextLine();
+						
+						System.out.println("Enter course name=");
+						String courseName = sc.nextLine(); 
+						HashMap<Questions, String> questions;
 						QuestionBank AnswerKey=new QuestionBank();
 						questions=(HashMap)AnswerKey.setQuestions();
 						courseList.put(courseName, questions);
 					}
 					break;
-				
+					
+				case 2:
+					System.out.println("These are the Courses");
+					for(String courseName:courseList.keySet())
+					{
+						System.out.println("->"+courseName);
+					}
+					System.out.print("\nEnter name of the Course to be deleted = ");
+					String CourseNameToBeDeleted=sc.nextLine();
+					courseList.remove(CourseNameToBeDeleted);
+					System.out.println("Course Deleted Successfully");
+					break;
+					
+				case 3:
+					System.out.println("These are the Courses");
+					for(String courseName:courseList.keySet())
+					{
+						System.out.println("->"+courseName);
+					}
+					System.out.print("\nEnter name of the Course to be renamed = ");
+					String oldCourseName=sc.nextLine();
+					System.out.print("\nEnter the new name of that Course= ");
+					String newCourseName=sc.nextLine();
+					courseList.put(newCourseName, courseList.get(oldCourseName));
+					courseList.remove(oldCourseName);
+					System.out.println("Course Renamed successfully");
+					break;
+					
+					
 				case 4:
 					System.out.println("Print the Courses");
 					for(String courseName:courseList.keySet())
@@ -66,8 +98,9 @@ public class Main {
 					System.out.println("Enter which course = ");
 					String courseNameToAdded=sc.nextLine();
 					QuestionBank AnswerKey2=new QuestionBank();
-					questions=(HashMap)AnswerKey2.addQuestion();
+					HashMap<Questions, String> questions=(HashMap)AnswerKey2.addQuestion(courseList.get(courseNameToAdded));
 					courseList.put(courseNameToAdded, questions);
+					break;
 				
 				case 6:
 					System.out.println("Print the Courses");
@@ -80,8 +113,9 @@ public class Main {
 					System.out.print("Enter question to be deleted = ");
 					String ques = sc.nextLine();
 					QuestionBank AnswerKey3=new QuestionBank();
-					questions=(HashMap)AnswerKey3.deleteQuestions(questions,ques);
-					courseList.put(courseNameToDelete, questions);
+					//questions=(HashMap)AnswerKey3.deleteQuestions(questions,ques);
+					HashMap<Questions, String> questions2=(HashMap)AnswerKey3.deleteQuestions(courseList.get(courseNameToDelete),ques);
+					courseList.put(courseNameToDelete, questions2);
 					break;
 				
 				case 7:
@@ -93,13 +127,16 @@ public class Main {
 					System.out.println("Enter which course = ");
 					String courseNameToModified=sc.nextLine();
 					QuestionBank AnswerKey4=new QuestionBank();
-					questions=(HashMap)AnswerKey4.modifyQuestion(questions);
-					courseList.put(courseNameToModified, questions);
+					//questions=(HashMap)AnswerKey4.modifyQuestion(questions);
+					HashMap<Questions, String> questions3=(HashMap)AnswerKey4.modifyQuestion(courseList.get(courseNameToModified));
+					courseList.put(courseNameToModified, questions3);
+					break;
+					
+				case 8: 
+					System.out.println("Exiting as Admin...");
+					break;
 				
-					
-					
-				case 8: System.out.println("Exiting as Admin...");break;
-				default: System.out.println("Invalid choice");break;
+				default: System.out.println("Invalid choice! Try Again");break;
 					
 			
 			}
@@ -113,7 +150,6 @@ public class Main {
 	{
 			int marks=0;
 			
-			System.out.println("_________________________________");
 			System.out.println("These are the  courses");
 			for(String CourseName :courseList.keySet() ) 
 			{
@@ -122,19 +158,23 @@ public class Main {
 			System.out.println("_________________________________");
 			System.out.print("Enter name of the chossen course = ");
 			String finalchoice= sc.nextLine() ;
+			System.out.println("_________________________________");
+			System.out.println("Question Paper");
+
 			
 			if(courseList.containsKey(finalchoice))
 			{
 				QuestionBank objques = new QuestionBank();
 				int QuestionNumber=0;
-				objques.display(questions);	
+				objques.display(courseList.get(finalchoice));	
 				
-				System.out.println("__________________________________________");
-				System.out.println("Answer Paper");
 				System.out.println("__________________________________________");
 				System.out.println("Instructions \n1. Write the correct option in the prompt\n2. Do make sure you rewrite the option correctly ");
 				System.out.println("__________________________________________");
-				
+				System.out.println("Answer Paper");
+				System.out.println("__________________________________________");
+
+				HashMap<Questions,String> questions = new HashMap<>(courseList.get(finalchoice));   
 				for(Questions item : questions.keySet()) 
 				{
 					QuestionNumber+=1;
@@ -148,7 +188,12 @@ public class Main {
 				System.out.println("Do you want to see your marks?  <yes/no> =");
 				String option=sc.nextLine();
 				if(option.equalsIgnoreCase("yes"))
-					System.out.println("Score : "+objques.correctcount);
+				{	System.out.println("Score : "+objques.correctcount);
+					marks=objques.correctcount;
+				}
+				
+				
+				
 			}
 			
 			examinee.setGoldPoints(marks);
@@ -163,7 +208,7 @@ public class Main {
 		while(choice!=5)
 		{
 		System.out.println("_____________________________________\n");
-		System.out.println("ONLINE EXAMINATION PORTAL");
+		System.out.println("ONLINE EXAMINATION PORTAL\n");
 		System.out.println("Menu");
 		System.out.println("1. Login as Admin");
 		System.out.println("2. Login as Student");
@@ -205,19 +250,20 @@ public class Main {
 				System.out.println("Enter Student password = ");
 				password=sc.nextLine();
 				ValidateLogin validateUser = new ValidateLogin();
-				boolean flag2=validateUser.studentValidation(email,password);
-				if(flag2==true)
+				boolean studentInList=false;
+				for (User item:StudentList)
 				{
-					for (User item:StudentList)
+					if(item.getEmail().equals(email) && item.getPassword().equals(password))
 					{
-						if(item.getEmail()==email)
-						{
-							System.out.println("Successfully Logined as Admin");
-							studentFunctionality(item);
-						}
+						System.out.println("Successfully Logined as Admin");
+						studentFunctionality(item);
+						studentInList=true;
+						break;
 					}
 				}
-				else System.out.println("Invalid Student Credentials...Try again!\n");
+				
+				if(studentInList==false)
+					System.out.println("Invalid Student Credentials...Try again!\n");
 				break;
 			
 			

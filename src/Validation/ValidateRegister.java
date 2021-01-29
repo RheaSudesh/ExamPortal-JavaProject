@@ -57,7 +57,7 @@ public class ValidateRegister {
 			}
 			return pat.matcher(email).matches();
 		    
-	    }	
+	    }
 	    
 	    private boolean validName(String name)
 	    {
