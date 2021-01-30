@@ -100,13 +100,14 @@ public class QuestionBank
 		boolean flag = false;
 		for(Questions item : questions.keySet()) 
 		{
-		if( item.getQuestion().equals(oldques)) 
-			{
-				flag=true;
-				questions.remove(item);
-			}
-		
+			if( item.getQuestion().equals(oldques)) 
+				{
+					flag=true;
+					questions.remove(item);
+					break;
+				}
 		}
+	
 		if(flag==true)
 		{
 			
@@ -149,10 +150,6 @@ public class QuestionBank
 			System.out.println(item.getOp3());
 			System.out.println(item.getOp4());
 			
-			/*String optionchoosen = sc.nextLine();
-			if(questions.get(item).equals(optionchoosen)) {
-				correctcount+=1;
-			}*/
 		}
 	}
 	
