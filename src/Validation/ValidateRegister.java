@@ -3,7 +3,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class ValidateRegister {
 	static Map<String, String> usermap = new TreeMap<String, String>(); 
 	Set<String> emailset = new TreeSet<String>();
@@ -46,16 +45,24 @@ public class ValidateRegister {
 	    
 
 	    private boolean validEmail(String email) {
-	    	String[] email1=email.split("@");	
-		    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+  "[a-zA-Z0-9_+&*-]+)*@" +  "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$"; 
-		                  
-			Pattern pat = Pattern.compile(emailRegex); 
-			if (email1 == null) 
-			{
-				System.out.println("EmailId should not be null and be in proper format. Retry Registration");
-				return false;
-			}
-			return pat.matcher(email).matches();
+	    	if(email!=null && email.contains("@"))
+	    	{
+		    	String[] email1=email.split("@");	
+			    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+  "[a-zA-Z0-9_+&*-]+)*@" +  "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$"; 
+			                  
+				Pattern pat = Pattern.compile(emailRegex); 
+				if (email1 == null) 
+				{
+					System.out.println("EmailId should not be null and be in proper format. Retry Registration");
+					return false;
+				}
+				return pat.matcher(email).matches();
+	    	}
+	    	else
+	    	{
+	    		System.out.println("Should contain symbol @ and should not be null");
+	    		return false;
+	    	}
 		    
 	    }
 	    

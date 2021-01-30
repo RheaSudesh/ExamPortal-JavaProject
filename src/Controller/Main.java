@@ -6,9 +6,8 @@ import Validation.*;
 public class Main {
 	
 	
-	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>(); //course , <Questions, string>
+	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>(); 
 	public static ArrayList<User> StudentList=new ArrayList<User>();
-	//public static HashMap<Questions, String> questions;
 	public static int noofcourses=0;
 	static Scanner sc=new Scanner(System.in);
 	
@@ -113,7 +112,6 @@ public class Main {
 					System.out.print("Enter question to be deleted = ");
 					String ques = sc.nextLine();
 					QuestionBank AnswerKey3=new QuestionBank();
-					//questions=(HashMap)AnswerKey3.deleteQuestions(questions,ques);
 					HashMap<Questions, String> questions2=(HashMap)AnswerKey3.deleteQuestions(courseList.get(courseNameToDelete),ques);
 					courseList.put(courseNameToDelete, questions2);
 					break;
@@ -127,7 +125,6 @@ public class Main {
 					System.out.println("Enter which course = ");
 					String courseNameToModified=sc.nextLine();
 					QuestionBank AnswerKey4=new QuestionBank();
-					//questions=(HashMap)AnswerKey4.modifyQuestion(questions);
 					HashMap<Questions, String> questions3=(HashMap)AnswerKey4.modifyQuestion(courseList.get(courseNameToModified));
 					courseList.put(courseNameToModified, questions3);
 					break;
@@ -244,12 +241,11 @@ public class Main {
 				break;
 
 			case 2:
-				//login for user
+				//login as an old candidate
 				System.out.println("Enter Student Email id = ");
 				email=sc.nextLine();
 				System.out.println("Enter Student password = ");
 				password=sc.nextLine();
-				ValidateLogin validateUser = new ValidateLogin();
 				boolean studentInList=false;
 				for (User item:StudentList)
 				{
@@ -268,7 +264,7 @@ public class Main {
 			
 			
 			case 3: 
-				//register for new candidates
+				//register as a new candidate
 				System.out.println("Enter your Name = ");
 				name=sc.nextLine();
 				System.out.println("Enter your Email ID = ");
@@ -295,10 +291,12 @@ public class Main {
 			
 			case 4: 
 				//printing results
+				System.out.println("_______________________________________________________________________________");
 				System.out.println(String.format("%20s : %20s : %20s","Student Roll Number","Student Name","Gold Points"));
-				System.out.println("________________________________________________");
+				System.out.println("_______________________________________________________________________________");
 				for (User item:StudentList)
 			        System.out.println(String.format("%20s : %20s : %20d",item.getRollNo(),item.getName(),item.getGoldPoints()));
+				System.out.println("_______________________________________________________________________________");
 				break;
 			
 			case 5:

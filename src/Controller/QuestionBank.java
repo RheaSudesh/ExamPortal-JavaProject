@@ -127,9 +127,7 @@ public class QuestionBank
 
 			obj = new Questions(newQues, newop1, newop2, newop3, newop4);
 			questions.put(obj, correctOption);	
-			System.out.println("Successfully added Question");	
-			
-			
+			System.out.println("Successfully added Question");				
 		}
 		else
 			System.out.println("No such Questions exists");
@@ -144,11 +142,12 @@ public class QuestionBank
 	
 		for(Questions item : questions.keySet()) {
 			
-			System.out.println(item.getQuestion());
-			System.out.println(item.getOp1());
-			System.out.println(item.getOp2());
-			System.out.println(item.getOp3());
-			System.out.println(item.getOp4());
+			System.out.println("Q) "+item.getQuestion());
+			System.out.println("-> "+item.getOp1());
+			System.out.println("-> "+item.getOp2());
+			System.out.println("-> "+item.getOp3());
+			System.out.println("-> "+item.getOp4());
+			System.out.println("");
 			
 		}
 	}
