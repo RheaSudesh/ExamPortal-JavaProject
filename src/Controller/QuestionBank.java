@@ -3,29 +3,16 @@ import java.util.*;
 import Model.*;
 
 
-public class QuestionBank 
+public class QuestionBank implements CourseOrganizer
 {
 
-	public Map<Questions,String> map = new HashMap<Questions,String>();
-	public int correctcount=0;	
-	int noOfQues;
 	Scanner sc = new Scanner(System.in);
 	
-	public int getNoOfQues() {
-		return noOfQues;
-	}
-	
-	public void setNoOfQues(int noOfQues) {
-		this.noOfQues = noOfQues;
-	}
-	
-	
-	
-	public Map<Questions, String> setQuestions() {
+	@Override
+	public Map<Questions, String> setQuestions(int noOfQues) {
+		// TODO Auto-generated method stub	
 		Map<Questions,String> mapques = new HashMap<Questions,String>();
 		mapques.clear();
-		System.out.println("Enter number of questions in this course");
-		noOfQues= sc.nextInt();sc.nextLine();
 		
 		while(noOfQues!=0)
 		{
@@ -49,10 +36,10 @@ public class QuestionBank
 		return mapques;
 	}
 	
-	
-	
+
+	@Override
 	public Map<Questions, String> deleteQuestions(Map<Questions, String> questions,String ques) {
-		
+		// TODO Auto-generated method stub	
 		int questionNotFound = 0;
 		for(Questions item : questions.keySet()) {
 			if(item.getQuestion().equals(ques)) 
@@ -70,9 +57,9 @@ public class QuestionBank
 		return questions;
 	}
 
-	
+	@Override
 	public Map<Questions, String> addQuestion(Map<Questions, String> questions) {
-		
+		// TODO Auto-generated method stub	
 		System.out.println("Enter a Question = ");	
 		String question = sc.nextLine();
 		System.out.println("Enter option 1 =");
@@ -92,9 +79,9 @@ public class QuestionBank
 		
 	}
 
-	
+	@Override
 	public Map<Questions, String> modifyQuestion(Map<Questions, String> questions) {
-		
+		// TODO Auto-generated method stub	
 		System.out.println("Enter the question to be modified =");
 		String oldques = sc.nextLine();
 		boolean flag = false;
@@ -137,21 +124,19 @@ public class QuestionBank
 		
 	}
 	
-		
+	@Override
 	public void display(Map<Questions, String> questions) {
-	
+		// TODO Auto-generated method stub
 		for(Questions item : questions.keySet()) {
 			
 			System.out.println("Q) "+item.getQuestion());
-			System.out.println("-> "+item.getOp1());
-			System.out.println("-> "+item.getOp2());
-			System.out.println("-> "+item.getOp3());
-			System.out.println("-> "+item.getOp4());
+			System.out.println("-> "+item.getOption1());
+			System.out.println("-> "+item.getOption2());
+			System.out.println("-> "+item.getOption3());
+			System.out.println("-> "+item.getOption4());
 			System.out.println("");
 			
 		}
 	}
-	
-	
 	
 }

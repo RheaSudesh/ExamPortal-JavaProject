@@ -38,6 +38,7 @@ public class User {
 	public void setRollNo(int rollNo) {
 		this.rollNo = rollNo;
 	}
+	
 	public User(String name, String email, String password, int rollNo) {
 		super();
 		this.name = name;
@@ -45,7 +46,4 @@ public class User {
 		this.password = password;
 		this.rollNo = rollNo;
 	}
-	
-	
-
 }

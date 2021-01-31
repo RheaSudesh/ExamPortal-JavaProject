@@ -3,11 +3,10 @@ import java.util.*;
 import Model.*;
 import Validation.*;
 
-public class Main {
+public class Main extends QuestionBank{
 	
-	
-	public static Map<String,HashMap> courseList = new HashMap<String,HashMap>(); 
-	public static ArrayList<User> StudentList=new ArrayList<User>();
+	public static ArrayList<Courses> courseList=new ArrayList<Courses>();
+	public static ArrayList<User> StudentList=new ArrayList<User>();  
 	public static int noofcourses=0;
 	static Scanner sc=new Scanner(System.in);
 	
@@ -36,98 +35,150 @@ public class Main {
 			switch(choice)
 			{
 				case 1:
+					//adding a course
 					System.out.println("Enter the number of courses = ");		
 					noofcourses=sc.nextInt();
 					sc.nextLine();
 					for(int courseNo=0;courseNo<noofcourses;courseNo++) 
 					{
-						System.out.println("--------SetQuestions --------");
+						System.out.println("-------- SetQuestions --------\n");
 						
-						System.out.println("Enter course name=");
+						System.out.println("Enter course ID =");
+						String courseID=sc.nextLine();
+						System.out.println("Enter course name =");
 						String courseName = sc.nextLine(); 
+						System.out.println("Enter number of questions in this course");
+						int noOfQuestions= sc.nextInt();sc.nextLine();
+						
 						HashMap<Questions, String> questions;
 						QuestionBank AnswerKey=new QuestionBank();
-						questions=(HashMap)AnswerKey.setQuestions();
-						courseList.put(courseName, questions);
+						questions=(HashMap)AnswerKey.setQuestions(noOfQuestions);
+						
+						Courses coursesObj=new Courses(courseID,courseName,noOfQuestions,questions);
+						courseList.add(coursesObj);
 					}
 					break;
 					
 				case 2:
+					//deleting a course
 					System.out.println("These are the Courses");
-					for(String courseName:courseList.keySet())
+					for(Courses obj : courseList)
 					{
-						System.out.println("->"+courseName);
+						System.out.println(obj.getCourseName());
 					}
 					System.out.print("\nEnter name of the Course to be deleted = ");
 					String CourseNameToBeDeleted=sc.nextLine();
-					courseList.remove(CourseNameToBeDeleted);
+					
+					for(Courses courseObj : courseList)
+					{
+						if(courseObj.getCourseName().equalsIgnoreCase(CourseNameToBeDeleted))
+						{
+							courseList.remove(courseObj);
+						}
+					}
 					System.out.println("Course Deleted Successfully");
 					break;
 					
 				case 3:
+					//renaming a course
 					System.out.println("These are the Courses");
-					for(String courseName:courseList.keySet())
+					for(Courses courseObj : courseList)
 					{
-						System.out.println("->"+courseName);
+						System.out.println(courseObj.getCourseName());
 					}
 					System.out.print("\nEnter name of the Course to be renamed = ");
 					String oldCourseName=sc.nextLine();
 					System.out.print("\nEnter the new name of that Course= ");
 					String newCourseName=sc.nextLine();
-					courseList.put(newCourseName, courseList.get(oldCourseName));
-					courseList.remove(oldCourseName);
+					for(Courses courseObj : courseList)
+					{
+						if(courseObj.getCourseName().equalsIgnoreCase(oldCourseName))
+						{
+							courseObj.setCourseName(newCourseName);
+						}
+					}
 					System.out.println("Course Renamed successfully");
 					break;
 					
 					
 				case 4:
+					//displaying a course
 					System.out.println("Print the Courses");
-					for(String courseName:courseList.keySet())
+					for(Courses course : courseList)
 					{
-						System.out.println("->"+courseName);
+						System.out.println(course.getCourseName());
 					}
 					break;
 				
 				case 5:
+					//adding a question to the course
 					System.out.println("Print the Courses");
-					for(String courseName:courseList.keySet())
+					for(Courses course : courseList)
 					{
-						System.out.println("->"+courseName);
+						System.out.println(course.getCourseName());
 					}
 					System.out.println("Enter which course = ");
 					String courseNameToAdded=sc.nextLine();
 					QuestionBank AnswerKey2=new QuestionBank();
-					HashMap<Questions, String> questions=(HashMap)AnswerKey2.addQuestion(courseList.get(courseNameToAdded));
-					courseList.put(courseNameToAdded, questions);
+					for(Courses courseObj : courseList)
+					{
+						if(courseNameToAdded.equalsIgnoreCase(courseObj.getCourseName()))
+						{
+							HashMap<Questions,String> oldCourseQuestionBank=courseObj.getCourseQuestionBank();
+							HashMap<Questions, String> newCourseQuestionBank=(HashMap)AnswerKey2.addQuestion(oldCourseQuestionBank);
+							courseObj.setCourseQuestionBank( newCourseQuestionBank);
+							courseObj.setNoOfQuestions(courseObj.getNoOfQuestions()+1);
+						}
+					}
 					break;
 				
 				case 6:
+					//deleting a question in the course
 					System.out.println("Print the Courses");
-					for(String courseName:courseList.keySet())
+					for(Courses course : courseList)
 					{
-						System.out.println("->"+courseName);
+						System.out.println(course.getCourseName());
 					}
 					System.out.println("Enter which course = ");
 					String courseNameToDelete=sc.nextLine();
 					System.out.print("Enter question to be deleted = ");
 					String ques = sc.nextLine();
-					QuestionBank AnswerKey3=new QuestionBank();
-					HashMap<Questions, String> questions2=(HashMap)AnswerKey3.deleteQuestions(courseList.get(courseNameToDelete),ques);
-					courseList.put(courseNameToDelete, questions2);
+					
+					QuestionBank AnswerKey3=new QuestionBank();					
+					for(Courses courseObj : courseList)
+					{
+						if(courseNameToDelete.equalsIgnoreCase(courseObj.getCourseName()))
+						{
+							HashMap<Questions,String> oldCourseQuestionBank=courseObj.getCourseQuestionBank();
+							HashMap<Questions, String> newCourseQuestionBank=(HashMap)AnswerKey3.deleteQuestions(oldCourseQuestionBank,ques);
+							courseObj.setCourseQuestionBank( newCourseQuestionBank);
+							courseObj.setNoOfQuestions(courseObj.getNoOfQuestions()-1);
+
+						}
+					}
 					break;
 				
 				case 7:
+					//modifying a question in the course
 					System.out.println("Print the Courses");
-					for(String courseName:courseList.keySet())
+					for(Courses course : courseList)
 					{
-						System.out.println("->"+courseName);
+						System.out.println(course.getCourseName());
 					}
 					System.out.println("Enter which course = ");
 					String courseNameToModified=sc.nextLine();
 					QuestionBank AnswerKey4=new QuestionBank();
-					HashMap<Questions, String> questions3=(HashMap)AnswerKey4.modifyQuestion(courseList.get(courseNameToModified));
-					courseList.put(courseNameToModified, questions3);
+					for(Courses courseObj : courseList)
+					{
+						if(courseNameToModified.equalsIgnoreCase(courseObj.getCourseName()))
+						{
+							HashMap<Questions,String> oldCourseQuestionBank=courseObj.getCourseQuestionBank();
+							HashMap<Questions, String> newCourseQuestionBank=(HashMap)AnswerKey4.modifyQuestion(oldCourseQuestionBank);
+							courseObj.setCourseQuestionBank( newCourseQuestionBank);
+						}
+					}
 					break;
+				
 					
 				case 8: 
 					System.out.println("Exiting as Admin...");
@@ -148,9 +199,9 @@ public class Main {
 			int marks=0;
 			
 			System.out.println("These are the  courses");
-			for(String CourseName :courseList.keySet() ) 
+			for(Courses course : courseList)
 			{
-				System.out.println("->" +CourseName);
+				System.out.println(course.getCourseName());
 			}
 			System.out.println("_________________________________");
 			System.out.print("Enter name of the chossen course = ");
@@ -159,37 +210,39 @@ public class Main {
 			System.out.println("Question Paper");
 
 			
-			if(courseList.containsKey(finalchoice))
+			for(Courses objCourses : courseList)
 			{
-				QuestionBank objques = new QuestionBank();
-				int QuestionNumber=0;
-				objques.display(courseList.get(finalchoice));	
-				
-				System.out.println("__________________________________________");
-				System.out.println("Instructions \n1. Write the correct option in the prompt\n2. Do make sure you rewrite the option correctly ");
-				System.out.println("__________________________________________");
-				System.out.println("Answer Paper");
-				System.out.println("__________________________________________");
-
-				HashMap<Questions,String> questions = new HashMap<>(courseList.get(finalchoice));   
-				for(Questions item : questions.keySet()) 
+				if(objCourses.getCourseName().equalsIgnoreCase(finalchoice))
 				{
-					QuestionNumber+=1;
-					System.out.println("Enter the answer for question "+QuestionNumber+" = ");
-					String optionchoosen=sc.nextLine();
-					if(questions.get(item).equals(optionchoosen)) 
+					QuestionBank objques = new QuestionBank();
+					int QuestionNumber=0;
+					objques.display(objCourses.getCourseQuestionBank());	
+					
+					System.out.println("__________________________________________");
+					System.out.println("Instructions \n1. Write the correct option in the prompt\n2. Do make sure you rewrite the option correctly ");
+					System.out.println("__________________________________________");
+					System.out.println("Answer Paper");
+					System.out.println("__________________________________________");
+	
+					HashMap<Questions,String> questionBank = new HashMap<>(objCourses.getCourseQuestionBank());   
+					for(Questions question : questionBank.keySet()) 
 					{
-						objques.correctcount+=1;			
+						QuestionNumber+=1;
+						System.out.println("Enter the answer for question "+QuestionNumber+" = ");
+						String optionchoosen=sc.nextLine();
+						if(questionBank.get(question).equals(optionchoosen)) 
+						{
+							marks+=1;			
+						}
 					}
-				}
-				System.out.println("Do you want to see your marks?  <yes/no> =");
-				String option=sc.nextLine();
-				if(option.equalsIgnoreCase("yes"))
-				{	System.out.println("Score : "+objques.correctcount);
-					marks=objques.correctcount;
-				}
+					System.out.println("Do you want to see your marks?  <yes/no> =");
+					String option=sc.nextLine();
+					if(option.equalsIgnoreCase("yes"))
+					{	System.out.println("Score : "+marks);
 				
+					}
 				
+				}
 				
 			}
 			
